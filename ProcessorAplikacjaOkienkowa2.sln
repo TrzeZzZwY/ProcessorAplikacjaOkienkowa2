@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessorAplikacjaOkienkowa2", "ProcessorAplikacjaOkienkowa2\ProcessorAplikacjaOkienkowa2.csproj", "{644D37A2-6C60-4254-8B67-5288E5FBA368}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Procesor", "..\Procesor\Procesor\Procesor.csproj", "{87F0766B-A5CA-45FD-A3D4-C4A44962EC96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{644D37A2-6C60-4254-8B67-5288E5FBA368}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{644D37A2-6C60-4254-8B67-5288E5FBA368}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{644D37A2-6C60-4254-8B67-5288E5FBA368}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87F0766B-A5CA-45FD-A3D4-C4A44962EC96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87F0766B-A5CA-45FD-A3D4-C4A44962EC96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87F0766B-A5CA-45FD-A3D4-C4A44962EC96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87F0766B-A5CA-45FD-A3D4-C4A44962EC96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
