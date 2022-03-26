@@ -7,9 +7,13 @@
         mc:Ignorable="d"
         Height="600" Width="920"
         ResizeMode="NoResize"
-        Background="Transparent">
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        MouseDown="Window_MouseDown"
+        >
 
-    <Border Background="#232223" CornerRadius="20">
+    <Border Background="#232223" CornerRadius="15" BorderThickness="2" BorderBrush="Black">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -23,41 +27,41 @@
             </Grid.RowDefinitions>
             <!--lewe rejestry-->
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="AL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
-                    <TextBox x:Name="AL" Width="50" MaxLength="2"></TextBox>
-                </TextBlock>
-                <TextBlock Text="BL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
-                    <TextBox x:Name="BL" Width="50" MaxLength="2"></TextBox>
-                </TextBlock>
-                <TextBlock Text="CL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
-                    <TextBox x:Name="CL" Width="50" MaxLength="2"></TextBox>
-                </TextBlock>
-                <TextBlock Text="DL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
-                    <TextBox x:Name="DL" Width="50" MaxLength="2"></TextBox>
-                </TextBlock>
-            </StackPanel>
-            <!-- Debug -->
-            <StackPanel>
-                <TextBlock Grid.Row="0" Grid.Column="0" x:Name="DEBUG" Width="200" Height="60" FontSize="22" Margin="15" Background="#343334" Text="DEBUG" TextAlignment= "Center" Padding="15"/>
-            </StackPanel>
-            <!--prawe rejestry-->
-            <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="AH " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
-                    <TextBox x:Name="AH" Width="50" MaxLength="2"></TextBox>
+                <TextBlock Text="AH " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center">
+                    <TextBox x:Name="AH" Width="50" MaxLength="2" TextChanged="TextChanged" Text="00" CharacterCasing="Upper"></TextBox>
                 </TextBlock>
                 <TextBlock Text="BH " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
-                    <TextBox x:Name="BH" Width="50" MaxLength="2"></TextBox>
+                    <TextBox x:Name="BH" Width="50" MaxLength="2" TextChanged="TextChanged" Text="00" CharacterCasing="Upper"></TextBox>
                 </TextBlock>
                 <TextBlock Text="CH " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
-                    <TextBox x:Name="CH" Width="50" MaxLength="2"></TextBox>
+                    <TextBox x:Name="CH" Width="50" MaxLength="2" TextChanged="TextChanged" Text="00" CharacterCasing="Upper"></TextBox>
                 </TextBlock>
                 <TextBlock Text="DH " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
-                    <TextBox x:Name="DH" Width="50" MaxLength="2"></TextBox>
+                    <TextBox x:Name="DH" Width="50" MaxLength="2" TextChanged="TextChanged" Text="00" CharacterCasing="Upper"></TextBox>
+                </TextBlock>
+            </StackPanel>
+            <!-- Debug 
+            <StackPanel>
+                <TextBlock Grid.Row="0" Grid.Column="0" x:Name="DEBUG" Width="200" Height="60" FontSize="22" Margin="15" Background="#343334" Text="DEBUG" TextAlignment= "Center" Padding="15"/>
+            </StackPanel>-->
+            <!--prawe rejestry-->
+            <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="AL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
+                    <TextBox x:Name="AL" Width="50" MaxLength="2" TextChanged="TextChanged" Text="00" CharacterCasing="Upper"></TextBox>
+                </TextBlock>
+                <TextBlock Text="BL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
+                    <TextBox x:Name="BL" Width="50" MaxLength="2" TextChanged="TextChanged" Text="00" CharacterCasing="Upper"></TextBox>
+                </TextBlock>
+                <TextBlock Text="CL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
+                    <TextBox x:Name="CL" Width="50" MaxLength="2" TextChanged="TextChanged" Text="00" CharacterCasing="Upper"></TextBox>
+                </TextBlock>
+                <TextBlock Text="DL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
+                    <TextBox x:Name="DL" Width="50" MaxLength="2" TextChanged="TextChanged" Text="00" CharacterCasing="Upper"></TextBox>
                 </TextBlock>
             </StackPanel>
             <!--wybieranie operacji-->
             <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="30 100 30 30">
-                <ComboBox  x:Name="SelectOperation" Width="200" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" VerticalAlignment="Center" HorizontalAlignment="Center" SelectionChanged="Operation_SelectionChanged" SelectedValuePath="Content">
+                <ComboBox  x:Name="SelectOperation" Width="200" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" VerticalAlignment="Center" HorizontalAlignment="Center" SelectionChanged="Operation_SelectionChanged" SelectedValuePath="Content" HorizontalContentAlignment="Center">
                     <ComboBoxItem Content="MOV"/>
                     <ComboBoxItem Content="XCHG"/>
                     <ComboBoxItem Content="INC"/>
@@ -73,7 +77,7 @@
             </StackPanel>
             <!--wybieranie lewego rejestru-->
             <StackPanel  Grid.Row="0" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 40 100">
-                <ComboBox x:Name="SelectLeft"  Width="60" Height="55" FontSize="16" FontFamily="Arial Rounded MT Bold" SelectionChanged="Left_SelectionChanged" SelectedValuePath="Content">
+                <ComboBox x:Name="SelectLeft"  Width="60" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" SelectionChanged="Left_SelectionChanged" SelectedValuePath="Content">
                     <ComboBoxItem Content="AL"/>
                     <ComboBoxItem Content="AH"/>
                     <ComboBoxItem Content="BL"/>
@@ -86,7 +90,7 @@
             </StackPanel>
             <!--wybieranie prawego rejestru-->
             <StackPanel x:Name="RightStackPanel"  Grid.Row="0" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="40 0 0 100">
-                <ComboBox x:Name="SelectRight"  Width="60" Height="55" FontSize="16" FontFamily="Arial Rounded MT Bold" SelectionChanged="Right_SelectionChanged" SelectedValuePath="Content">
+                <ComboBox x:Name="SelectRight"  Width="60" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" SelectionChanged="Right_SelectionChanged" SelectedValuePath="Content">
                     <ComboBoxItem Content="AL"/>
                     <ComboBoxItem Content="AH"/>
                     <ComboBoxItem Content="BL"/>
@@ -99,10 +103,19 @@
             </StackPanel>
 
 
-            <Button Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Background="#ffc554" Height="80" Width="180" Content="Losuj" FontSize="38" FontFamily="Arial Rounded MT Bold" Click="Losuj"></Button>
-            <Button Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Height="80" Width="180" Background="#844eff" Content="Wykonaj" FontSize="38" FontFamily="Arial Rounded MT Bold" Click="Wykonaj"></Button>
-            
-            
+            <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Background="#ffc554" Height="80" Width="180" CornerRadius="20" >
+                <TextBlock Text="Losuj" TextAlignment="Center" Padding="15" FontSize="38" FontFamily="Arial Rounded MT Bold" MouseLeftButtonDown="Losuj"/>
+            </Border>
+
+
+            <Border Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Background="#844eff" Height="80" Width="180" CornerRadius="20" >
+                <TextBlock Text="Wykonaj" TextAlignment="Center" Padding="15" FontSize="38" FontFamily="Arial Rounded MT Bold" MouseLeftButtonDown="Wykonaj"/>
+            </Border>
+
+
+            <Ellipse Height="20" Width="20" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 10 10 0" Fill="#dd2222" MouseLeftButtonDown="CloseApp"/>
+            <Ellipse Height="20" Width="20" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 10 40 0" Fill="#da2" MouseLeftButtonDown="MinimizeApp"/>
+
         </Grid>
     </Border>
 </Window>

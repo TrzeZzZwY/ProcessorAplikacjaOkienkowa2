@@ -73,8 +73,7 @@ namespace ProcessorAplikacjaOkienkowa2
 
 
         private void Wykonaj(object sender, RoutedEventArgs e)
-        {
-            DEBUG.Text = left.ToString();
+        {          
             if (operation != null && left != -1)
             {
                 switch (operation)
@@ -121,6 +120,7 @@ namespace ProcessorAplikacjaOkienkowa2
                         {
                             var sub = rejestry[left];
                             Rejestr.SUB(ref sub, rejestry[right]);
+                            rejestry[left] = sub;
                         }
                         break;
                     case "AND":
@@ -149,6 +149,51 @@ namespace ProcessorAplikacjaOkienkowa2
                         break;
                 }
                 Aktualizuj();
+            }
+        }
+
+        private void TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            var index = rejestry.FindIndex(e => e.Name == textBox.Name);
+            try
+            {
+                rejestry[index].Value = Convert.ToInt32(textBox.Text, 16).ToString();
+            }
+            catch (Exception)
+            {
+              
+            }
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        }
+
+        private void MinimizeApp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                this.WindowState = WindowState.Minimized;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void CloseApp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Close();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
             }
         }
     }
