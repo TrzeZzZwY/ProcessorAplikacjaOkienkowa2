@@ -23,6 +23,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="200"/>
                 <RowDefinition Height="150"/>
             </Grid.RowDefinitions>
             <!--lewe rejestry-->
@@ -59,6 +60,30 @@
                     <TextBox x:Name="DL" Width="50" MaxLength="2" TextChanged="TextChanged" Text="00" CharacterCasing="Upper"></TextBox>
                 </TextBlock>
             </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="BX " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
+                    <TextBlock x:Name="BX" Width="100"  Text="0000" Background="White" Margin="0,0,0,5"></TextBlock>
+                </TextBlock>
+                <TextBlock Text="BL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
+                    <TextBox x:Name="BP" Width="100" MaxLength="4" TextChanged="TextChanged" Text="0000" CharacterCasing="Upper"></TextBox>
+                </TextBlock>
+                <TextBlock Text="CL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
+                    <TextBox x:Name="DI" Width="100" MaxLength="4" TextChanged="TextChanged" Text="0000" CharacterCasing="Upper"></TextBox>
+                </TextBlock>
+                <TextBlock Text="DL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
+                    <TextBox x:Name="SI" Width="100" MaxLength="4" TextChanged="TextChanged" Text="0000" CharacterCasing="Upper"></TextBox>
+                </TextBlock>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="DISP " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" ></TextBlock>
+                <TextBlock Text="Adres    " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
+                    <TextBox x:Name="DISP_ADDRESS" Width="100" MaxLength="4" TextChanged="TextChanged" Text="0000" CharacterCasing="Upper"></TextBox>
+                </TextBlock>
+                <TextBlock Text="Warotść " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
+                    <TextBox x:Name="DISP_VALUE" Width="100" MaxLength="4" TextChanged="TextChanged" Text="0000" CharacterCasing="Upper"></TextBox>
+                </TextBlock>
+            </StackPanel>
             <!--wybieranie operacji-->
             <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="30 100 30 30">
                 <ComboBox  x:Name="SelectOperation" Width="200" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" VerticalAlignment="Center" HorizontalAlignment="Center" SelectionChanged="Operation_SelectionChanged" SelectedValuePath="Content" HorizontalContentAlignment="Center">
@@ -76,7 +101,7 @@
                 </ComboBox>
             </StackPanel>
             <!--wybieranie lewego rejestru-->
-            <StackPanel  Grid.Row="0" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 40 100">
+            <StackPanel  Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 40 100">
                 <ComboBox x:Name="SelectLeft"  Width="60" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" SelectionChanged="Left_SelectionChanged" SelectedValuePath="Content">
                     <ComboBoxItem Content="AL"/>
                     <ComboBoxItem Content="AH"/>
@@ -89,7 +114,7 @@
                 </ComboBox>
             </StackPanel>
             <!--wybieranie prawego rejestru-->
-            <StackPanel x:Name="RightStackPanel"  Grid.Row="0" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="40 0 0 100">
+            <StackPanel x:Name="RightStackPanel"  Grid.Row="1" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="40 0 0 100">
                 <ComboBox x:Name="SelectRight"  Width="60" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" SelectionChanged="Right_SelectionChanged" SelectedValuePath="Content">
                     <ComboBoxItem Content="AL"/>
                     <ComboBoxItem Content="AH"/>
@@ -103,12 +128,12 @@
             </StackPanel>
 
 
-            <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Background="#ffc554" Height="80" Width="180" CornerRadius="20" >
+            <Border Grid.Column="2" Grid.Row="2"  Background="#ffc554" Height="80" Width="180" CornerRadius="20" >
                 <TextBlock Text="Losuj" TextAlignment="Center" Padding="15" FontSize="38" FontFamily="Arial Rounded MT Bold" MouseLeftButtonDown="Losuj"/>
             </Border>
 
 
-            <Border Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" Background="#844eff" Height="80" Width="180" CornerRadius="20" >
+            <Border Grid.Column="3" Grid.Row="2"  Background="#844eff" Height="80" Width="180" CornerRadius="20" >
                 <TextBlock Text="Wykonaj" TextAlignment="Center" Padding="15" FontSize="38" FontFamily="Arial Rounded MT Bold" MouseLeftButtonDown="Wykonaj"/>
             </Border>
 

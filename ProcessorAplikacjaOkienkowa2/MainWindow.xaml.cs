@@ -24,6 +24,7 @@ namespace ProcessorAplikacjaOkienkowa2
         string? operation;
         int left;
         int right;
+        Rejestr[] DISP = new Rejestr[65536];
         public MainWindow()
         {
             InitializeComponent();
@@ -35,6 +36,11 @@ namespace ProcessorAplikacjaOkienkowa2
             rejestry.Add(new Rejestr("ch"));
             rejestry.Add(new Rejestr("dl"));
             rejestry.Add(new Rejestr("dh"));
+            Random random = new Random();
+            for (int i = 0; i < 65536; i++)
+            {
+                DISP[i] = new Rejestr("AZ");
+            }
         }
 
         private void Losuj(object sender, RoutedEventArgs e)
@@ -42,8 +48,15 @@ namespace ProcessorAplikacjaOkienkowa2
             Random random = new Random();
             foreach (var item in rejestry)
             {
-                item.Value = random.Next(256).ToString();              
+                item.Value = random.Next(256).ToString();
             }
+            for (int i = 0; i < 65536; i++)
+            {
+                DISP[i] = new Rejestr("AZ", random.Next(256));
+            }
+            BP.Text = random.Next(65536).ToString("x2").ToUpper();
+            DI.Text = random.Next(65536).ToString("x2").ToUpper();
+            SI.Text = random.Next(65536).ToString("x2").ToUpper();
             Aktualizuj();
         }
         private void Aktualizuj()
@@ -73,7 +86,7 @@ namespace ProcessorAplikacjaOkienkowa2
 
 
         private void Wykonaj(object sender, RoutedEventArgs e)
-        {          
+        {
             if (operation != null && left != -1)
             {
                 switch (operation)
@@ -132,7 +145,7 @@ namespace ProcessorAplikacjaOkienkowa2
                         }
                         break;
                     case "OR":
-                        if (right != -1) 
+                        if (right != -1)
                         {
                             var or = rejestry[left];
                             Rejestr.OR(ref or, rejestry[right]);
@@ -155,14 +168,27 @@ namespace ProcessorAplikacjaOkienkowa2
         private void TextChanged(object sender, TextChangedEventArgs e)
         {
             var textBox = (TextBox)sender;
-            var index = rejestry.FindIndex(e => e.Name == textBox.Name);
-            try
+            if (textBox.Name != "DISP_ADDRESS" &&
+                textBox.Name != "DISP_VALUE")
             {
-                rejestry[index].Value = Convert.ToInt32(textBox.Text, 16).ToString();
-            }
-            catch (Exception)
-            {
-              
+
+                var index = rejestry.FindIndex(e => e.Name == textBox.Name);
+                try
+                {
+                    rejestry[index].Value = Convert.ToInt32(textBox.Text, 16).ToString();
+                    if (index == 3)
+                    {
+                        BX.Text = $"{rejestry[index].Value}{BX.Text[2]}{BX.Text[3]}";
+                    }
+                    if (index == 2)
+                    {
+                        BX.Text = $"{BX.Text[0]}{BX.Text[1]}{rejestry[index].Value}";
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
             }
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
