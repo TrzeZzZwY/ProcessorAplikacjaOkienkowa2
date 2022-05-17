@@ -24,7 +24,9 @@ namespace ProcessorAplikacjaOkienkowa2
         string? operation;
         int left;
         int right;
+        int baseLength;
         Rejestr[] DISP = new Rejestr[65536];
+        bool ready = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,11 +38,14 @@ namespace ProcessorAplikacjaOkienkowa2
             rejestry.Add(new Rejestr("ch"));
             rejestry.Add(new Rejestr("dl"));
             rejestry.Add(new Rejestr("dh"));
+            baseLength = rejestry.Count;
             Random random = new Random();
             for (int i = 0; i < 65536; i++)
             {
-                DISP[i] = new Rejestr("AZ");
+                rejestry.Add(new Rejestr("AZ"));
+                //DISP[i] = new Rejestr("AZ");
             }
+            ready = true;
         }
 
         private void Losuj(object sender, RoutedEventArgs e)
@@ -63,9 +68,13 @@ namespace ProcessorAplikacjaOkienkowa2
         {
             foreach (var item in rejestry)
             {
+                if (item.Name == "AZ")
+                    break;
                 TextBox textBox = (TextBox)FindName(item.Name);
                 textBox.Text = item.Value;
             }
+            int index = int.Parse(DISP_ADDRESS.Text, System.Globalization.NumberStyles.HexNumber);
+            DISP_VALUE.Text = rejestry[index + baseLength].Value;
         }
         private void Operation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -73,10 +82,15 @@ namespace ProcessorAplikacjaOkienkowa2
             if (operation == "INC" || operation == "DEC" || operation == "NOT" || operation == "NEG")
             {
                 RightStackPanel.Visibility = Visibility.Hidden;
+                RightStackPanelButton.Visibility = Visibility.Hidden;
+                RightStackPanelDISP.Visibility = Visibility.Hidden;
                 right = -1;
             }
             else
+            {
                 RightStackPanel.Visibility = Visibility.Visible;
+                RightStackPanelButton.Visibility= Visibility.Visible;
+            }
 
         }
         private void Left_SelectionChanged(object sender, SelectionChangedEventArgs e) => left = rejestry.FindIndex(e => e.Name == SelectLeft.SelectedValue.ToString());
@@ -164,14 +178,12 @@ namespace ProcessorAplikacjaOkienkowa2
                 Aktualizuj();
             }
         }
-
         private void TextChanged(object sender, TextChangedEventArgs e)
         {
             var textBox = (TextBox)sender;
             if (textBox.Name != "DISP_ADDRESS" &&
-                textBox.Name != "DISP_VALUE")
+                textBox.Name != "DIPS_VALUE")
             {
-
                 var index = rejestry.FindIndex(e => e.Name == textBox.Name);
                 try
                 {
@@ -189,6 +201,30 @@ namespace ProcessorAplikacjaOkienkowa2
                 {
 
                 }
+            }
+            else if (ready)
+            {
+                if (textBox.Name == "DISP_VALUE")
+                {
+                    BL.Text = "69";
+                }
+
+                if (textBox.Name == "DISP_ADDRESS")
+                {
+                    try
+                    {
+                        int index = int.Parse(textBox.Text, System.Globalization.NumberStyles.HexNumber);
+                        //DISP_VALUE.Text = DISP[index].Value;
+                        DISP_VALUE.Text = rejestry[index + baseLength].Value;
+                    }
+                    catch (Exception)
+                    {
+                   
+                    }
+                }
+
+
+
             }
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -221,6 +257,147 @@ namespace ProcessorAplikacjaOkienkowa2
 
                 MessageBox.Show(ex.Message);
             }
+        }
+
+
+        private void ChangeValueDisp(object sender, TextChangedEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            if (!ready) return;
+            try
+            {
+                int value = int.Parse(textBox.Text, System.Globalization.NumberStyles.HexNumber);
+                int index = int.Parse(DISP_ADDRESS.Text, System.Globalization.NumberStyles.HexNumber);
+                //DISP[index].Value = value.ToString();
+                rejestry[index + baseLength].Value = value.ToString();
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void ChangeVisibilityRight(object sender, MouseButtonEventArgs e)
+        {
+            if (RightStackPanel.Visibility == Visibility.Visible)
+            {
+                RightStackPanel.Visibility = Visibility.Hidden;
+                RightStackPanelDISP.Visibility = Visibility.Visible;
+                if(LeftStackPanelDISP.Visibility == Visibility.Visible)
+                {
+                    LeftStackPanelDISP.Visibility = Visibility.Hidden;
+                    LeftStackPanel.Visibility = Visibility.Visible;
+                    if (SelectLeft.SelectedValue != null)
+                        left = rejestry.FindIndex(e => e.Name == SelectLeft.SelectedValue.ToString());
+                }
+                Right_SelectionDISP(sender);
+            }
+            else
+            {
+                RightStackPanelDISP.Visibility = Visibility.Hidden;
+                RightStackPanel.Visibility = Visibility.Visible;
+                if (SelectLeft.SelectedValue != null)
+                    right = rejestry.FindIndex(e => e.Name == SelectRight.SelectedValue.ToString());
+            }
+        }
+        private void ChangeVisibilityLeft(object sender, MouseButtonEventArgs e)
+        {
+            if (LeftStackPanel.Visibility == Visibility.Visible)
+            {
+                LeftStackPanel.Visibility = Visibility.Hidden;
+                LeftStackPanelDISP.Visibility = Visibility.Visible;
+                if (RightStackPanelDISP.Visibility == Visibility.Visible)
+                {
+                    RightStackPanelDISP.Visibility = Visibility.Hidden;
+                    RightStackPanel.Visibility = Visibility.Visible;
+                    if (SelectLeft.SelectedValue != null)
+                        right = rejestry.FindIndex(e => e.Name == SelectRight.SelectedValue.ToString());
+                }
+                Left_SelectionDISP(sender);
+            }
+            else
+            {
+                LeftStackPanelDISP.Visibility = Visibility.Hidden;
+                LeftStackPanel.Visibility = Visibility.Visible;
+                if (SelectLeft.SelectedValue != null)
+                    left = rejestry.FindIndex(e => e.Name == SelectLeft.SelectedValue.ToString());
+            }
+        }
+
+        private void Left_SelectionDISPChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Left_SelectionDISP(sender);
+        }
+        private void Left_SelectionDISP(object sender)
+        {
+            int a = 0, b = 0, c = 0;
+
+            if (SelectLeftDISPB.SelectedValue != null && SelectLeftDISPB.SelectedValue.ToString() != "-")
+            {
+                if (SelectLeftDISPB.SelectedValue.ToString() == "BX")
+                    a = int.Parse(BX.Text, System.Globalization.NumberStyles.HexNumber);
+                if (SelectLeftDISPB.SelectedValue.ToString() == "BP")
+                    a = int.Parse(BP.Text, System.Globalization.NumberStyles.HexNumber);
+            }
+            if (SelectLeftDISPI.SelectedValue != null && SelectLeftDISPI.SelectedValue.ToString() != "-")
+            {
+                if (SelectLeftDISPI.SelectedValue.ToString() == "SI")
+                    b = int.Parse(SI.Text, System.Globalization.NumberStyles.HexNumber);
+                if (SelectLeftDISPI.SelectedValue.ToString() == "DI")
+                    b = int.Parse(DI.Text, System.Globalization.NumberStyles.HexNumber);
+            }
+            try
+            {
+                c = int.Parse(SelectLeftDISPV.Text, System.Globalization.NumberStyles.HexNumber);
+            }
+            catch (Exception)
+            {
+
+                c = 0;
+            }
+
+            left = a + b + c + baseLength;
+        }
+        private void Left_SelectionDISPTextChanged(object sender, TextChangedEventArgs e)
+        {
+            Left_SelectionDISP(sender);
+        }
+        private void Right_SelectionDISPChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Right_SelectionDISP(sender);
+        }
+        private void Right_SelectionDISP(object sender)
+        {
+            int a = 0, b = 0, c = 0;
+
+            if (SelectRightDISPB.SelectedValue != null && SelectRightDISPB.SelectedValue.ToString() != "-")
+            {
+                if (SelectRightDISPB.SelectedValue.ToString() == "BX")
+                    a = int.Parse(BX.Text, System.Globalization.NumberStyles.HexNumber);
+                if (SelectRightDISPB.SelectedValue.ToString() == "BP")
+                    a = int.Parse(BP.Text, System.Globalization.NumberStyles.HexNumber);
+            }
+            if (SelectRightDISPI.SelectedValue != null && SelectRightDISPI.SelectedValue.ToString() != "-")
+            {
+                if (SelectRightDISPI.SelectedValue.ToString() == "SI")
+                    b = int.Parse(SI.Text, System.Globalization.NumberStyles.HexNumber);
+                if (SelectRightDISPI.SelectedValue.ToString() == "DI")
+                    b = int.Parse(DI.Text, System.Globalization.NumberStyles.HexNumber);
+            }
+            try
+            {
+                c = int.Parse(SelectRightDISPV.Text, System.Globalization.NumberStyles.HexNumber);
+            }
+            catch (Exception)
+            {
+
+                c = 0;
+            }
+
+            right = a + b + c + baseLength;
+        }
+        private void Right_SelectionDISPTextChanged(object sender, TextChangedEventArgs e)
+        {
+            Right_SelectionDISP(sender);
         }
     }
 }

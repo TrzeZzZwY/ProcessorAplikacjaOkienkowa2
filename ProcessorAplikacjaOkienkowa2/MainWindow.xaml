@@ -41,8 +41,8 @@
                     <TextBox x:Name="DH" Width="50" MaxLength="2" TextChanged="TextChanged" Text="00" CharacterCasing="Upper"></TextBox>
                 </TextBlock>
             </StackPanel>
-            <!-- Debug 
-            <StackPanel>
+            <!--Debug-->
+            <!--<StackPanel>
                 <TextBlock Grid.Row="0" Grid.Column="0" x:Name="DEBUG" Width="200" Height="60" FontSize="22" Margin="15" Background="#343334" Text="DEBUG" TextAlignment= "Center" Padding="15"/>
             </StackPanel>-->
             <!--prawe rejestry-->
@@ -64,24 +64,24 @@
                 <TextBlock Text="BX " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
                     <TextBlock x:Name="BX" Width="100"  Text="0000" Background="White" Margin="0,0,0,5"></TextBlock>
                 </TextBlock>
-                <TextBlock Text="BL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
+                <TextBlock Text="BP " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
                     <TextBox x:Name="BP" Width="100" MaxLength="4" TextChanged="TextChanged" Text="0000" CharacterCasing="Upper"></TextBox>
                 </TextBlock>
-                <TextBlock Text="CL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
+                <TextBlock Text="DI " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
                     <TextBox x:Name="DI" Width="100" MaxLength="4" TextChanged="TextChanged" Text="0000" CharacterCasing="Upper"></TextBox>
                 </TextBlock>
-                <TextBlock Text="DL " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
+                <TextBlock Text="SI " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
                     <TextBox x:Name="SI" Width="100" MaxLength="4" TextChanged="TextChanged" Text="0000" CharacterCasing="Upper"></TextBox>
                 </TextBlock>
             </StackPanel>
-            
+
             <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="DISP " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" ></TextBlock>
                 <TextBlock Text="Adres    " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
                     <TextBox x:Name="DISP_ADDRESS" Width="100" MaxLength="4" TextChanged="TextChanged" Text="0000" CharacterCasing="Upper"></TextBox>
                 </TextBlock>
                 <TextBlock Text="Warotść " FontSize="22" FontFamily="Arial Rounded MT Bold" TextAlignment="Center" >
-                    <TextBox x:Name="DISP_VALUE" Width="100" MaxLength="4" TextChanged="TextChanged" Text="0000" CharacterCasing="Upper"></TextBox>
+                    <TextBox x:Name="DISP_VALUE" Width="100" MaxLength="4" TextChanged="ChangeValueDisp" Text="0000" CharacterCasing="Upper"></TextBox>
                 </TextBlock>
             </StackPanel>
             <!--wybieranie operacji-->
@@ -100,32 +100,74 @@
                     <ComboBoxItem Content="XOR"/>
                 </ComboBox>
             </StackPanel>
+
+
             <!--wybieranie lewego rejestru-->
-            <StackPanel  Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 40 100">
-                <ComboBox x:Name="SelectLeft"  Width="60" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" SelectionChanged="Left_SelectionChanged" SelectedValuePath="Content">
-                    <ComboBoxItem Content="AL"/>
+            <Ellipse  x:Name="LeftStackPanelButton" Grid.Row="1" Grid.Column="2" Height="30" Width="30"  VerticalAlignment="Top" HorizontalAlignment="Center"  Fill="Navy" MouseLeftButtonDown="ChangeVisibilityLeft"/>
+            <StackPanel x:Name="LeftStackPanel" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="0 70 0 0" HorizontalAlignment="Center" >
+                <ComboBox x:Name="SelectLeft"  Width="60" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" SelectionChanged="Left_SelectionChanged" SelectedValuePath="Content" >
                     <ComboBoxItem Content="AH"/>
-                    <ComboBoxItem Content="BL"/>
+                    <ComboBoxItem Content="AL"/>
                     <ComboBoxItem Content="BH"/>
-                    <ComboBoxItem Content="CL"/>
+                    <ComboBoxItem Content="BL"/>
                     <ComboBoxItem Content="CH"/>
-                    <ComboBoxItem Content="DL"/>
+                    <ComboBoxItem Content="CL"/>
                     <ComboBoxItem Content="DH"/>
+                    <ComboBoxItem Content="DL"/>
                 </ComboBox>
             </StackPanel>
+            
+            
+            <StackPanel x:Name="LeftStackPanelDISP"  Visibility="Hidden"  Orientation="Horizontal" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 70 20 0" >
+
+                <ComboBox x:Name="SelectLeftDISPB"  Width="60" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" SelectionChanged="Left_SelectionDISPChanged" SelectedValuePath="Content">
+                    <ComboBoxItem Content="-"/>
+                    <ComboBoxItem Content="BX"/>
+                    <ComboBoxItem Content="BL"/>
+                </ComboBox>
+                <ComboBox x:Name="SelectLeftDISPI"  Width="60" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" SelectionChanged="Left_SelectionDISPChanged" SelectedValuePath="Content">
+                    <ComboBoxItem Content="-"/>
+                    <ComboBoxItem Content="DI"/>
+                    <ComboBoxItem Content="SI"/>
+                </ComboBox>
+                <TextBox FontSize="22" TextAlignment="Center" x:Name="SelectLeftDISPV" Width="80" MaxLength="4" TextChanged="Left_SelectionDISPTextChanged" Text="0000" CharacterCasing="Upper"/>
+            </StackPanel>
+
+
             <!--wybieranie prawego rejestru-->
-            <StackPanel x:Name="RightStackPanel"  Grid.Row="1" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="40 0 0 100">
-                <ComboBox x:Name="SelectRight"  Width="60" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" SelectionChanged="Right_SelectionChanged" SelectedValuePath="Content">
-                    <ComboBoxItem Content="AL"/>
+
+            <Ellipse x:Name="RightStackPanelButton" Height="30" Width="30"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 0 0 10" Fill="Navy" MouseLeftButtonDown="ChangeVisibilityRight" Grid.Row="1" Grid.Column="3"/>
+            <StackPanel x:Name="RightStackPanel"  Grid.Row="1" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 70 0 0">
+                <ComboBox x:Name="SelectRight"  Width="60" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" SelectionChanged="Right_SelectionChanged"  SelectedValuePath="Content">
+                    
                     <ComboBoxItem Content="AH"/>
-                    <ComboBoxItem Content="BL"/>
+                    <ComboBoxItem Content="AL"/>
                     <ComboBoxItem Content="BH"/>
-                    <ComboBoxItem Content="CL"/>
+                    <ComboBoxItem Content="BL"/>
                     <ComboBoxItem Content="CH"/>
-                    <ComboBoxItem Content="DL"/>
+                    <ComboBoxItem Content="CL"/>
                     <ComboBoxItem Content="DH"/>
+                    <ComboBoxItem Content="DL"/>
                 </ComboBox>
             </StackPanel>
+
+            <StackPanel x:Name="RightStackPanelDISP" Visibility="Hidden"  Orientation="Horizontal" Grid.Row="1" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 70 0 0">
+                <ComboBox x:Name="SelectRightDISPB"  Width="60" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" SelectionChanged="Right_SelectionDISPChanged" SelectedValuePath="Content">
+                    <ComboBoxItem Content="-"/>
+                    <ComboBoxItem Content="BX"/>
+                    <ComboBoxItem Content="BP"/>
+                </ComboBox>
+
+                <ComboBox x:Name="SelectRightDISPI"  Width="60" Height="40" FontSize="22" FontFamily="Arial Rounded MT Bold" SelectionChanged="Right_SelectionDISPChanged" SelectedValuePath="Content">
+                    <ComboBoxItem Content="-"/>
+                    <ComboBoxItem Content="DI"/>
+                    <ComboBoxItem Content="SI"/>
+                </ComboBox>
+                <TextBox FontSize="22" TextAlignment="Center" x:Name="SelectRightDISPV" Width="80" MaxLength="4" TextChanged="Right_SelectionDISPTextChanged" Text="0000" CharacterCasing="Upper"></TextBox>
+            </StackPanel>
+
+
+
 
 
             <Border Grid.Column="2" Grid.Row="2"  Background="#ffc554" Height="80" Width="180" CornerRadius="20" >
